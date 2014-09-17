@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="jp.tomorrowkey.android.felicalitewriter"
+    package="com.blogspot.comolog.felicareaderwriter"
     android:versionCode="1"
     android:versionName="1.0.0" >
 
@@ -8,7 +8,11 @@
 
     <uses-sdk
         android:minSdkVersion="10"
-        android:targetSdkVersion="15" />
+        android:targetSdkVersion="19" />
+
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +20,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".HomeActivity"
+            android:name="com.blogspot.comolog.felicareaderwriter.HomeActivity"
             android:label="@string/title_activity_home"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -24,9 +28,24 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            
+            <intent-filter>
+                <action android:name="android.nfc.action.TECH_DISCOVERED" />
+            </intent-filter>
+			<meta-data android:name="android.nfc.action.TECH_DISCOVERED"
+    			android:resource="@xml/nfc_tech_filter" />
+
+			<intent-filter>
+                <action android:name="android.nfc.action.TAG_DISCOVERED" />
+            </intent-filter>
         </activity>
         <activity
-            android:name=".WriteActivity"
+            android:name="com.blogspot.comolog.felicareaderwriter.WriteActivity"
             android:label="@string/title_activity_home"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" >

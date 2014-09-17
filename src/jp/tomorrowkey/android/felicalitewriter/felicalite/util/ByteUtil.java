@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package jp.tomorrowkey.android.felicalitewriter.util;
+package jp.tomorrowkey.android.felicalitewriter.felicalite.util;
 
 /**
  * byte型に関するユーティリティ

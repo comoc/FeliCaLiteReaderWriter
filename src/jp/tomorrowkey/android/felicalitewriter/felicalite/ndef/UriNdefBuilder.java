@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package jp.tomorrowkey.android.felicalitewriter.ndef;
+package jp.tomorrowkey.android.felicalitewriter.felicalite.ndef;
 
 import org.apache.http.util.ByteArrayBuffer;
 
