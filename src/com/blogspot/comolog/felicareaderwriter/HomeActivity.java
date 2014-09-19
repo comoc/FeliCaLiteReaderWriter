@@ -23,8 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import jp.tomorrowkey.android.felicalitewriter.R;
-import jp.tomorrowkey.android.felicalitewriter.felicalite.ndef.UriNdefBuilder;
+import jp.tomorrowkey.android.felicalitewriter.felicalite.ndef.TextNdefBuilder;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -81,8 +80,8 @@ public class HomeActivity extends Activity {
 			return;
 		}
 
-		// TextNdefBuilder builder = new TextNdefBuilder(urlString, "ja");
-		UriNdefBuilder builder = new UriNdefBuilder(urlString);
+		TextNdefBuilder builder = new TextNdefBuilder(urlString, "ja");
+		// UriNdefBuilder builder = new UriNdefBuilder(urlString);
 		NdefMessage ndefMessage = builder.build();
 		performMoveToWriteActivity(ndefMessage);
 	}
@@ -106,6 +105,9 @@ public class HomeActivity extends Activity {
 				for (NdefRecord record : msgs[i].getRecords()) {
 					if (isUriRecord(record)) {
 						str += "Uri : " + getUri(record);
+					} else if (isTextRecord(record)) {
+						String[] tl = getTextAndLanguageCode(record);
+						str += "Text : " + tl[0];
 					} else {
 						str += "Type : " + new String(record.getType()) + "\n";
 						str += "TNF : " + record.getTnf() + "\n";
@@ -130,6 +132,11 @@ public class HomeActivity extends Activity {
 	private boolean isUriRecord(NdefRecord record) {
 		return record.getTnf() == NdefRecord.TNF_WELL_KNOWN
 				&& Arrays.equals(record.getType(), NdefRecord.RTD_URI);
+	}
+
+	private boolean isTextRecord(NdefRecord record) {
+		return record.getTnf() == NdefRecord.TNF_WELL_KNOWN
+				&& Arrays.equals(record.getType(), NdefRecord.RTD_TEXT);
 	}
 
 	private static List<String> sProtocolList;
@@ -202,6 +209,35 @@ public class HomeActivity extends Activity {
 		}
 
 		return uri;
+	}
+
+	/**
+	 * RTD TEXT RecordからURIを取得します
+	 * 
+	 * @param record
+	 * @return [0]:text, [1]:langageCode
+	 * @see http://bs-nfc.blogspot.jp/2012/08/androidrtd-text.html
+	 */
+	private String[] getTextAndLanguageCode(NdefRecord record) {
+		if (record == null)
+			throw new IllegalArgumentException();
+		byte[] payload = record.getPayload();
+		byte flags = payload[0];
+		String encoding = ((flags & 0x80) == 0) ? "UTF-8" : "UTF-16";
+		int languageCodeLength = flags & 0x3F;
+		try {
+			String languageCode = new String(payload, 1, languageCodeLength,
+					"US-ASCII");
+			String text = new String(payload, 1 + languageCodeLength,
+					payload.length - (1 + languageCodeLength), encoding);
+			// return String.format("%s(%s)", text, languageCode);
+			return new String[] { text, languageCode };// String.format("%s(%s)",
+														// text, languageCode);
+		} catch (UnsupportedEncodingException e) {
+			throw new IllegalArgumentException();
+		} catch (IndexOutOfBoundsException e) {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	@Override

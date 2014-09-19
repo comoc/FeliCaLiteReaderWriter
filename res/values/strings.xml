@@ -7,9 +7,11 @@
     <string name="tag_found">タグが見つかりました</string>
     <string name="not_felica">FeliCaではありません</string>
     <string name="wrote_ndef">NDEFを書き込みました</string>
-    <string name="url">URL</string>
-    <string name="ok">書き込み準備</string>
+<!--     <string name="url">URL</string>
+ -->
+     <string name="url">文字列</string>
+     <string name="ok">書き込み準備</string>
     <string name="invalid_url">URLが不正な値です</string>
-    <string name="read_message">書き込み済みのタグをかざすと読み取ります。\n新たに書き込むにはURLを入力して書き込み準備ボタンを押してからタグをかざして下さい。</string>
+    <string name="read_message">書き込み済みのタグをかざすと読み取ります。\n\n新たに書き込むには文字列を入力してから『書き込み準備』ボタンを押して下さい。\nその後に書込む対象のタグをかざして下さい。</string>
 
 </resources>

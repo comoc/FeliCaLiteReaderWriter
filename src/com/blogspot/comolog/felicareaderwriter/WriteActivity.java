@@ -21,7 +21,6 @@ package com.blogspot.comolog.felicareaderwriter;
 
 import java.io.IOException;
 
-import jp.tomorrowkey.android.felicalitewriter.R;
 import jp.tomorrowkey.android.felicalitewriter.felicalite.FeliCaLiteTag;
 import jp.tomorrowkey.android.felicalitewriter.felicalite.FeliCaLiteTag.SizeOverflowException;
 import jp.tomorrowkey.android.felicalitewriter.felicalite.FeliCaLiteTag.UnsupportTagException;
