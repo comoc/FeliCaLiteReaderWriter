@@ -9,9 +9,11 @@
     <string name="wrote_ndef">NDEFを書き込みました</string>
 <!--     <string name="url">URL</string>
  -->
-     <string name="url">文字列</string>
+     <string name="url">書き込む文字列</string>
      <string name="ok">書き込み準備</string>
     <string name="invalid_url">URLが不正な値です</string>
-    <string name="read_message">書き込み済みのタグをかざすと読み取ります。\n\n新たに書き込むには文字列を入力してから『書き込み準備』ボタンを押して下さい。\nその後に書込む対象のタグをかざして下さい。</string>
+    <string name="read_message">書き込み済みのタグをかざすと読み取ります。</string>
+    <string name="read_hint">読み取った文字列</string>
+    <string name="write_message">新たに書き込むには、文字列を入力してから『書き込み準備』ボタンを押して下さい。\nその後に書込む対象のタグをかざして下さい。</string>
 
 </resources>

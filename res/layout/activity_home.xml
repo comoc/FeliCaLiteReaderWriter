@@ -2,15 +2,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
     android:padding="@dimen/padding_medium" >
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/read_message" />
+
+    <EditText
+        android:id="@+id/editTextRead"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/silver"
+        android:ems="10"
+        android:focusable="false"
+        android:gravity="top|left"
+        android:hint="@string/read_hint"
+        android:inputType="text|textMultiLine"
+        android:minLines="4"
+        android:scrollbars="vertical" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/read_message" />
+        android:text="@string/write_message" />
 
     <TextView
         android:layout_width="match_parent"

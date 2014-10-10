@@ -55,6 +55,14 @@ public class HomeActivity extends Activity {
 		initOKButton();
 
 		initNfc();
+
+		Intent intent = getIntent();
+		String action = intent.getAction();
+		if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)
+				|| NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)
+				|| NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)) {
+			readNdef(intent);
+		}
 	}
 
 	private void initUrlEditText() {
@@ -94,20 +102,23 @@ public class HomeActivity extends Activity {
 
 	private void readNdef(Intent intent) {
 		String action = intent.getAction();
-		String str = getString(R.string.tag_found) + "\n" + "Action: " + action;
+		// String str = getString(R.string.tag_found) + "\n" + "Action: " +
+		// action;
+		String str = "";// getString(R.string.tag_found);
 		Parcelable[] raws = intent
 				.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
 		if (raws != null && raws.length > 0) {
-			str += "\n";
 			NdefMessage[] msgs = new NdefMessage[raws.length];
 			for (int i = 0; i < raws.length; i++) {
 				msgs[i] = (NdefMessage) raws[i];
 				for (NdefRecord record : msgs[i].getRecords()) {
 					if (isUriRecord(record)) {
-						str += "Uri : " + getUri(record);
+						// str += "Uri : " + getUri(record);
+						str += getUri(record);
 					} else if (isTextRecord(record)) {
 						String[] tl = getTextAndLanguageCode(record);
-						str += "Text : " + tl[0];
+						// str += "Text : " + tl[0];
+						str += tl[0];
 					} else {
 						str += "Type : " + new String(record.getType()) + "\n";
 						str += "TNF : " + record.getTnf() + "\n";
@@ -122,11 +133,16 @@ public class HomeActivity extends Activity {
 							idx++;
 						}
 					}
+
+					str += "\n";
 				}
 			}
 		}
-		// text.setText(str);
-		Toast.makeText(this, str, Toast.LENGTH_LONG).show();
+
+		Toast.makeText(getApplicationContext(), R.string.tag_found,
+				Toast.LENGTH_SHORT).show();
+
+		((EditText) findViewById(R.id.editTextRead)).setText(str);
 	}
 
 	private boolean isUriRecord(NdefRecord record) {
@@ -178,6 +194,8 @@ public class HomeActivity extends Activity {
 		sProtocolList.add("urn:epc:raw:");
 		sProtocolList.add("urn:epc:");
 		sProtocolList.add("urn:nfc:");
+		sProtocolList.add("address:"); // Komori
+
 	}
 
 	/**
